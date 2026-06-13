@@ -1,6 +1,8 @@
+"use client";
+
 import { cva, type VariantProps } from "class-variance-authority";
-import type { ComponentProps } from "react";
 import { Slot } from "radix-ui";
+import type React from "react";
 
 import { cn } from "@/lib/utils";
 import { IconLoader2 } from "@tabler/icons-react";
@@ -40,7 +42,7 @@ const buttonVariants = cva(
   },
 );
 
-type ButtonProps = ComponentProps<"button"> &
+type ButtonProps = React.ComponentProps<"button"> &
   VariantProps<typeof buttonVariants> & {
     loading?: boolean;
     icon?: React.ReactNode;

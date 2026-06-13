@@ -1,11 +1,8 @@
-import type { Metadata } from "next";
-
 import { Geist, Geist_Mono, Oxanium } from "next/font/google";
-
-import ThemeButton from "@/components/buttons/theme-button";
+import ThemeToggle from "@/components/buttons/theme-toggle";
 import ThemeProvider from "@/providers/theme-provider";
+import type { Metadata } from "next";
 import { cn } from "@/lib/utils";
-
 import "./globals.css";
 
 const oxanium = Oxanium({ subsets: ["latin"], variable: "--font-sans" });
@@ -43,14 +40,11 @@ export default function RootLayout({
         oxanium.variable,
       )}
     >
-      <body
-        suppressHydrationWarning
-        className="min-h-full flex flex-col bg-background text-foreground"
-      >
+      <body className="min-h-full flex flex-col bg-background text-foreground p-5">
         <ThemeProvider>
           {children}
-          <div className="fixed top-5 right-5">
-            <ThemeButton />
+          <div className="fixed top-3.5 right-3.5">
+            <ThemeToggle />
           </div>
         </ThemeProvider>
       </body>
