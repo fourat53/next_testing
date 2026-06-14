@@ -55,18 +55,18 @@
 
 :root {
   --background: oklch(1 0 0);
-  --foreground: oklch(0.148 0.004 228.8);
+  --foreground: oklch(19.336% 0.006 237);
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.148 0.004 228.8);
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.148 0.004 228.8);
-  --primary: oklch(0.514 0.222 16.935);
+  --primary: oklch(50% 0.18 17);
   --primary-foreground: oklch(0.969 0.015 12.422);
   --secondary: oklch(0.967 0.001 286.375);
   --secondary-foreground: oklch(0.21 0.006 285.885);
   --muted: oklch(0.963 0.002 197.1);
   --muted-foreground: oklch(0.56 0.021 213.5);
-  --accent: oklch(0.514 0.222 16.935);
+  --accent: oklch(50% 0.18 17);
   --accent-foreground: oklch(0.969 0.015 12.422);
   --destructive: oklch(0.577 0.245 27.325);
   --border: oklch(0.925 0.005 214.3);
@@ -89,7 +89,7 @@
 }
 
 .dark {
-  --background: oklch(0.148 0.004 228.8);
+  --background: oklch(19.336% 0.006 237);
   --foreground: oklch(0.987 0.002 197.1);
   --card: oklch(0.218 0.008 223.9);
   --card-foreground: oklch(0.987 0.002 197.1);
@@ -101,7 +101,7 @@
   --secondary-foreground: oklch(0.985 0 0);
   --muted: oklch(0.275 0.011 216.9);
   --muted-foreground: oklch(0.723 0.014 214.4);
-  --accent: oklch(0.455 0.188 13.697);
+  --accent: oklch(51.288% 0.18534 12.356);
   --accent-foreground: oklch(0.969 0.015 12.422);
   --destructive: oklch(0.704 0.191 22.216);
   --border: oklch(1 0 0 / 10%);
@@ -136,4 +136,53 @@
   html {
     @apply font-sans;
   }
+}
+
+.a {
+  background:
+    radial-gradient(
+      at 94.4722123938968% 10.565950037872273%,
+      hsla(220, 15%, 12%, 1) 0%,
+      hsla(5.806451612903232, 100%, 87.84313725490196%, 0) 100%
+    ),
+    radial-gradient(
+      at 50.21811966266432% 36.67419364803133%,
+      hsla(220, 15%, 12%, 1) 0%,
+      hsla(148.32, 54.1125541125541%, 54.705882352941174%, 0) 100%
+    ),
+    radial-gradient(
+      at 94.19808887431806% 75.57831987472261%,
+      hsla(220, 15%, 12%, 1) 0%,
+      hsla(220, 15%, 12%, 0) 100%
+    ),
+    radial-gradient(
+      at 36.84402742064098% 9.592450429791588%,
+      hsla(0, 0%, 100%, 1) 0%,
+      hsla(0, 0%, 100%, 0) 100%
+    ),
+    radial-gradient(
+      at 11.56579677576256% 68.14582686126278%,
+      hsla(220, 15%, 12%, 1) 0%,
+      hsla(5.806451612903232, 100%, 87.84313725490196%, 0) 100%
+    ),
+    radial-gradient(
+      at 82.34298404230887% 11.28685155844773%,
+      hsla(220, 15%, 12%, 1) 0%,
+      hsla(148.32, 54.1125541125541%, 54.705882352941174%, 0) 100%
+    ),
+    radial-gradient(
+      at 21.96674053812313% 82.45846916037529%,
+      hsla(220, 15%, 12%, 1) 0%,
+      hsla(220, 15%, 12%, 0) 100%
+    ),
+    radial-gradient(
+      at 60.56890830364042% 19.478110264187933%,
+      hsla(0, 0%, 100%, 1) 0%,
+      hsla(0, 0%, 100%, 0) 100%
+    ),
+    radial-gradient(
+      at 35.897460676484485% 23.507006826290223%,
+      hsla(220, 15%, 12%, 1) 0%,
+      hsla(5.806451612903232, 100%, 87.84313725490196%, 0) 100%
+    );
 }

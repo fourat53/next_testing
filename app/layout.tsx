@@ -1,9 +1,11 @@
 import { Geist, Geist_Mono, Oxanium } from "next/font/google";
 import ThemeToggle from "@/components/buttons/theme-toggle";
+import { KindeProvider } from "@/providers/kinde-provider";
 import ThemeProvider from "@/providers/theme-provider";
 import type { Metadata } from "next";
 import { cn } from "@/lib/utils";
 import "./globals.css";
+import Background from "@/components/ui/background";
 
 const oxanium = Oxanium({ subsets: ["latin"], variable: "--font-sans" });
 
@@ -32,7 +34,7 @@ export default function RootLayout({
       suppressHydrationWarning
       lang="en"
       className={cn(
-        "h-full",
+        "h-screen w-screen overflow-hidden overscroll-none",
         "antialiased",
         geistSans.variable,
         geistMono.variable,
@@ -40,13 +42,15 @@ export default function RootLayout({
         oxanium.variable,
       )}
     >
-      <body className="min-h-full flex flex-col bg-background text-foreground p-5">
-        <ThemeProvider>
-          {children}
-          <div className="fixed top-3.5 right-3.5">
-            <ThemeToggle />
-          </div>
-        </ThemeProvider>
+      <body className="h-screen w-screen overflow-hidden overscroll-none text-foreground">
+        <KindeProvider>
+          <ThemeProvider>
+            <Background>{children}</Background>
+            <div className="fixed top-3.5 right-3.5 z-50">
+              <ThemeToggle />
+            </div>
+          </ThemeProvider>
+        </KindeProvider>
       </body>
     </html>
   );

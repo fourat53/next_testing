@@ -1,20 +1,11 @@
-import {
-  ThemeProvider as NextThemesProvider,
-  type ThemeProviderProps,
-} from "next-themes";
-
+import { ThemeProvider as NextThemesProvider } from "@wrksz/themes/next";
 export default function ThemeProvider({
   children,
-  ...props
-}: ThemeProviderProps) {
+}: {
+  children: React.ReactNode;
+}) {
   return (
-    <NextThemesProvider
-      enableSystem
-      attribute="class"
-      defaultTheme="system"
-      disableTransitionOnChange
-      {...props}
-    >
+    <NextThemesProvider enableSystem defaultTheme="system">
       {children}
     </NextThemesProvider>
   );

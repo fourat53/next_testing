@@ -8,7 +8,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { useTheme } from "next-themes";
+import { useTheme } from "@wrksz/themes/client";
 import { cn } from "@/lib/utils";
 import { useEffect, useState } from "react";
 import LoaderSmall from "../loaders/loader-small";
@@ -22,7 +22,7 @@ const themes: ThemeType[] = [
   { icon: IconSun, value: "light" },
   { icon: IconMoon, value: "dark" },
   { icon: IconSunMoon, value: "system" },
-];
+] as const;
 
 export default function ThemeToggle() {
   const { theme, setTheme } = useTheme();
@@ -43,7 +43,11 @@ export default function ThemeToggle() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button size="icon" className="rounded-full">
+        <Button
+          variant="secondary"
+          size="icon"
+          className="rounded-full shadow-mist-400 shadow-sm"
+        >
           {theme === "light" ? (
             <IconSun className="size-4" />
           ) : theme === "dark" ? (
@@ -60,9 +64,8 @@ export default function ThemeToggle() {
             key={t.value}
             onClick={() => setTheme(t.value)}
             className={cn(
-              "cursor-pointer hover:bg-primary/70 dark:hover:bg-primary/70",
-              t.value === theme &&
-                "bg-primary text-white hover:bg-primary/70 dark:hover:bg-primary/70",
+              t.value === theme && "bg-primary text-white",
+              "cursor-pointer hover:bg-accent",
             )}
           >
             <t.icon className="size-4" />
