@@ -10,35 +10,43 @@ import Image from "next/image";
 export default async function Home() {
   const { isAuthenticated, getUser } = getKindeServerSession();
   const user = await getUser();
-
-  if (!isAuthenticated()) {
-    return (
-      <div className="h-screen flex gap-4 items-center justify-center">
-        <Button>
-          <LoginLink>Sign In</LoginLink>
-        </Button>
-        <Button>
-          <RegisterLink>Sign Up</RegisterLink>
-        </Button>
-      </div>
-    );
-  }
+  const isLoggedIn = await isAuthenticated();
 
   return (
-    <div className="h-screen flex flex-col gap-4 items-center justify-center">
-      {user !== null && user.picture !== null && (
-        <Image
-          src={user?.picture}
-          alt={user?.given_name || "User"}
-          width={60}
-          height={60}
-          className="rounded-full"
-        />
+    <div className="h-[calc(100vh-(var(--p-layout)*2))] flex flex-col items-center justify-center gap-4">
+      {isLoggedIn ? (
+        <>
+          {user !== null &&
+            (user.picture !== null ? (
+              <Image
+                src={user?.picture}
+                alt={user?.given_name || ""}
+                width={60}
+                height={60}
+                className="rounded-full"
+              />
+            ) : (
+              user?.given_name !== null && (
+                <div className="text-xl text-semibold">
+                  user.given_name.charAt(0).toUpperCase
+                </div>
+              )
+            ))}
+          Welcome, {user?.given_name} {user?.family_name}
+          <Button>
+            <LogoutLink>Log out</LogoutLink>
+          </Button>
+        </>
+      ) : (
+        <>
+          <Button>
+            <LoginLink>Login</LoginLink>
+          </Button>
+          <Button variant="primary">
+            <RegisterLink>Sign Up</RegisterLink>
+          </Button>
+        </>
       )}
-      Welcome, {user?.given_name} {user?.family_name}
-      <Button>
-        <LogoutLink>Log out</LogoutLink>
-      </Button>
     </div>
   );
 }

@@ -5,7 +5,10 @@ import ThemeProvider from "@/providers/theme-provider";
 import type { Metadata } from "next";
 import { cn } from "@/lib/utils";
 import "./globals.css";
-import Background from "@/components/ui/background";
+import Background from "@/components/background/background";
+import { TooltipProvider } from "@/components/ui/tooltip";
+import { SidebarProvider, SidebarInset } from "@/components/ui/sidebar";
+import AdminSidebar from "@/components/sidebar/AdminSidebar";
 
 const oxanium = Oxanium({ subsets: ["latin"], variable: "--font-sans" });
 
@@ -34,7 +37,6 @@ export default function RootLayout({
       suppressHydrationWarning
       lang="en"
       className={cn(
-        "h-screen w-screen overflow-hidden overscroll-none",
         "antialiased",
         geistSans.variable,
         geistMono.variable,
@@ -42,13 +44,23 @@ export default function RootLayout({
         oxanium.variable,
       )}
     >
-      <body className="h-screen w-screen overflow-hidden overscroll-none text-foreground">
+      <body className="min-h-screen text-foreground">
         <KindeProvider>
           <ThemeProvider>
-            <Background>{children}</Background>
-            <div className="fixed top-3.5 right-3.5 z-50">
-              <ThemeToggle />
-            </div>
+            <TooltipProvider>
+              <Background />
+              <div className="p-(--p-layout)">
+                <SidebarProvider>
+                  <SidebarInset className="relative rounded-4xl bg-mist-100 dark:bg-mist-900">
+                    <AdminSidebar />
+                    {children}
+                  </SidebarInset>
+                </SidebarProvider>
+              </div>
+              <div className="fixed z-50 top-3.75 right-3.75">
+                <ThemeToggle />
+              </div>
+            </TooltipProvider>
           </ThemeProvider>
         </KindeProvider>
       </body>

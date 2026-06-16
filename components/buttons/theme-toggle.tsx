@@ -10,8 +10,6 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { useTheme } from "@wrksz/themes/client";
 import { cn } from "@/lib/utils";
-import { useEffect, useState } from "react";
-import LoaderSmall from "../loaders/loader-small";
 
 type ThemeType = {
   icon: Icon;
@@ -26,28 +24,11 @@ const themes: ThemeType[] = [
 
 export default function ThemeToggle() {
   const { theme, setTheme } = useTheme();
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  if (!mounted) {
-    return (
-      <Button size="icon" className="rounded-full">
-        <LoaderSmall />
-      </Button>
-    );
-  }
 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button
-          variant="secondary"
-          size="icon"
-          className="rounded-full shadow-mist-400 shadow-sm"
-        >
+        <Button size="icon" className="rounded-full">
           {theme === "light" ? (
             <IconSun className="size-4" />
           ) : theme === "dark" ? (
@@ -64,8 +45,9 @@ export default function ThemeToggle() {
             key={t.value}
             onClick={() => setTheme(t.value)}
             className={cn(
-              t.value === theme && "bg-primary text-white",
-              "cursor-pointer hover:bg-accent",
+              t.value === theme &&
+                "bg-primary text-white border-2 border-mist-50 shadow-[0px_0px_4px_0.5px_rgba(20,38,41,0.5)]",
+              "cursor-pointer hover:bg-primary",
             )}
           >
             <t.icon className="size-4" />

@@ -1,3 +1,5 @@
+import { Button } from "@/components/ui/button";
+
 const colors = [
   "background",
   "foreground",
@@ -32,26 +34,43 @@ const colors = [
   "sidebar-ring",
 ] as const;
 
+const variants = [
+  "default",
+  "primary",
+  "secondary",
+  "outline",
+  "ghost",
+  "link",
+] as const;
+
 export default function ColorsPage() {
   return (
-    <main className="mx-auto">
-      <h1 className="text-2xl font-bold pb-3">Theme Color Palette</h1>
+    <main>
+      <h1 className="pb-4 text-2xl font-bold">Theme Color Palette</h1>
 
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7 gap-4">
+      <div className="grid grid-cols-2 gap-4 pb-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7">
         {colors.map((color) => (
           <div
             key={color}
-            className="flex flex-col gap-2 p-2 border rounded-lg bg-card shadow-sm"
+            className="flex flex-col gap-2 p-2 border rounded-lg shadow-sm bg-card"
           >
             <div
-              className="w-full h-20 rounded-md border border-black/10 dark:border-white/10"
+              className="w-full h-20 border rounded-md border-black/10 dark:border-white/10"
               style={{ backgroundColor: `var(--${color})` }}
             />
 
-            <span className="text-xs text-center font-mono font-medium truncate text-card-foreground">
+            <span className="font-mono text-xs font-medium text-center truncate text-card-foreground">
               {color}
             </span>
           </div>
+        ))}
+      </div>
+
+      <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
+        {variants.map((variant) => (
+          <Button key={variant} variant={variant}>
+            {variant}
+          </Button>
         ))}
       </div>
     </main>
