@@ -13,7 +13,7 @@ export default async function Home() {
   const isLoggedIn = await isAuthenticated();
 
   return (
-    <div className="h-[calc(100vh-(var(--p-layout)*2))] flex flex-col items-center justify-center gap-4">
+    <div className="h-full flex flex-col items-center justify-center gap-4">
       {isLoggedIn ? (
         <>
           {user !== null &&

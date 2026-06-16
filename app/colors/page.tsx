@@ -45,8 +45,8 @@ const variants = [
 
 export default function ColorsPage() {
   return (
-    <main>
-      <h1 className="pb-4 text-2xl font-bold">Theme Color Palette</h1>
+    <main className="p-5 flex flex-col gap-4">
+      <h1 className="text-2xl font-bold">Theme Color Palette</h1>
 
       <div className="grid grid-cols-2 gap-4 pb-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7">
         {colors.map((color) => (

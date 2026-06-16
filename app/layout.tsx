@@ -1,14 +1,13 @@
+import { SidebarProvider, SidebarInset } from "@/components/ui/sidebar";
 import { Geist, Geist_Mono, Oxanium } from "next/font/google";
+import AdminSidebar from "@/components/sidebar/AdminSidebar";
 import ThemeToggle from "@/components/buttons/theme-toggle";
 import { KindeProvider } from "@/providers/kinde-provider";
+import { TooltipProvider } from "@/components/ui/tooltip";
 import ThemeProvider from "@/providers/theme-provider";
 import type { Metadata } from "next";
 import { cn } from "@/lib/utils";
 import "./globals.css";
-import Background from "@/components/background/background";
-import { TooltipProvider } from "@/components/ui/tooltip";
-import { SidebarProvider, SidebarInset } from "@/components/ui/sidebar";
-import AdminSidebar from "@/components/sidebar/AdminSidebar";
 
 const oxanium = Oxanium({ subsets: ["latin"], variable: "--font-sans" });
 
@@ -44,19 +43,22 @@ export default function RootLayout({
         oxanium.variable,
       )}
     >
-      <body className="min-h-screen text-foreground">
+      <body className="min-h-screen text-foreground bg-sidebar">
         <KindeProvider>
           <ThemeProvider>
             <TooltipProvider>
-              <Background />
-              <div className="p-(--p-layout)">
-                <SidebarProvider>
-                  <SidebarInset className="relative rounded-4xl bg-mist-100 dark:bg-mist-900">
-                    <AdminSidebar />
+              <SidebarProvider>
+                <AdminSidebar />
+                <SidebarInset
+                  className="bg-[linear-gradient(45deg,var(--chart-1)_10%,var(--sidebar)_100%)] 
+                dark:bg-[linear-gradient(-135deg,var(--sidebar)_10%,var(--sidebar-accent)_100%)] 
+                p-(--p-layout) border-l border-l-mist-300 dark:border-l-mist-900 rounded-l-4xl"
+                >
+                  <div className="h-[calc(100vh-(var(--p-layout)*2))] bg-sidebar rounded-4xl">
                     {children}
-                  </SidebarInset>
-                </SidebarProvider>
-              </div>
+                  </div>
+                </SidebarInset>
+              </SidebarProvider>
               <div className="fixed z-50 top-3.75 right-3.75">
                 <ThemeToggle />
               </div>
