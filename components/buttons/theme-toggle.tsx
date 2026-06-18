@@ -28,7 +28,7 @@ export default function ThemeToggle() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button size="icon" className="rounded-full">
+        <Button className="size-7.5 rounded-xl">
           {theme === "light" ? (
             <IconSun className="size-4" />
           ) : theme === "dark" ? (
@@ -46,7 +46,7 @@ export default function ThemeToggle() {
             onClick={() => setTheme(t.value)}
             className={cn(
               t.value === theme &&
-                "bg-primary text-white border-2 border-mist-50 shadow-[0px_0px_4px_0.5px_rgba(20,38,41,0.5)]",
+                "bg-primary text-white border border-mist-50 shadow-[0px_0px_4px_0.5px_rgba(20,38,41,0.5)]",
               "cursor-pointer hover:bg-primary",
             )}
           >

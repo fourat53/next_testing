@@ -1,14 +1,15 @@
 "use client";
 
 import * as React from "react";
-import { cva, type VariantProps } from "class-variance-authority";
 import { Slot } from "radix-ui";
-
-import { useIsMobile } from "@/hooks/use-mobile";
 import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { useIsMobile } from "@/hooks/use-mobile";
+import { Skeleton } from "@/components/ui/skeleton";
 import { Separator } from "@/components/ui/separator";
+import { IconLayoutSidebar } from "@tabler/icons-react";
+import { cva, type VariantProps } from "class-variance-authority";
 import {
   Sheet,
   SheetContent,
@@ -16,13 +17,11 @@ import {
   SheetHeader,
   SheetTitle,
 } from "@/components/ui/sheet";
-import { Skeleton } from "@/components/ui/skeleton";
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { IconLayoutSidebar } from "@tabler/icons-react";
 
 const SIDEBAR_LOCAL_STORAGE_NAME = "sidebar_state";
 const SIDEBAR_WIDTH = "16rem";
@@ -261,14 +260,14 @@ function SidebarTrigger({
       data-slot="sidebar-trigger"
       variant="ghost"
       size="icon-sm"
-      className={cn(className)}
+      className={cn("hover:border hover:border-border", className)}
       onClick={(event) => {
         onClick?.(event);
         toggleSidebar();
       }}
       {...props}
     >
-      <IconLayoutSidebar className="rtl:rotate-180" />
+      <IconLayoutSidebar className="size-4.5 rtl:rotate-180" />
       <span className="sr-only">Toggle Sidebar</span>
     </Button>
   );

@@ -1,12 +1,10 @@
-"use client";
-
+import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
+import type { KindeUser } from "@kinde-oss/kinde-auth-nextjs";
 import {
-  IconCreditCard,
-  IconDotsVertical,
-  IconLogout,
-  IconNotification,
-  IconUserCircle,
-} from "@tabler/icons-react";
+  RegisterLink,
+  LoginLink,
+  LogoutLink,
+} from "@kinde-oss/kinde-auth-nextjs/components";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -20,19 +18,74 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-  useSidebar,
 } from "@/components/ui/sidebar";
+import {
+  IconCreditCard,
+  IconDotsVertical,
+  IconLogout,
+  IconNotification,
+  IconUserCircle,
+} from "@tabler/icons-react";
+import Image from "next/image";
+import { Button } from "../ui/button";
 
-export function NavUser({
-  user,
-}: {
-  user: {
-    name: string;
-    email: string;
-    avatar: string;
-  };
-}) {
-  const { isMobile } = useSidebar();
+function AvatarImage({ user }: { user: KindeUser<Record<string, unknown>> }) {
+  return (
+    <div className="size-8 flex items-center justify-center rounded-lg">
+      {user.picture ? (
+        <Image
+          src={user.picture}
+          alt={user.given_name || ""}
+          width={32}
+          height={32}
+          className="rounded-lg"
+        />
+      ) : (
+        user.given_name &&
+        user.given_name.length > 0 && (
+          <div className="text-xl text-semibold bg-accent">
+            name.charAt(0).toUpperCase
+          </div>
+        )
+      )}
+    </div>
+  );
+}
+
+function UserInfo({ user }: { user: KindeUser<Record<string, unknown>> }) {
+  return (
+    <div className="grid flex-1 text-left text-sm leading-tight">
+      <span className="truncate font-medium">
+        {user.given_name} {user.family_name}
+      </span>
+      <span className="truncate text-xs text-muted-foreground">
+        {user.email}
+      </span>
+    </div>
+  );
+}
+
+export async function NavUser() {
+  const { isAuthenticated, getUser } = getKindeServerSession();
+  const user = await getUser();
+  const isLoggedIn = await isAuthenticated();
+
+  if (!isLoggedIn || !user) {
+    return (
+      <SidebarMenu>
+        <SidebarMenuItem className="w-full px-2.5 py-1.5">
+          <div className="flex flex-col gap-2">
+            <Button className="w-full">
+              <LoginLink>Login</LoginLink>
+            </Button>
+            <Button className="w-full" variant="outline">
+              <RegisterLink>Sign Up</RegisterLink>
+            </Button>
+          </div>
+        </SidebarMenuItem>
+      </SidebarMenu>
+    );
+  }
 
   return (
     <SidebarMenu>
@@ -43,37 +96,21 @@ export function NavUser({
               size="lg"
               className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
             >
-              <div className="bg-accent h-8 w-8 rounded-lg">
-                {/* <AvatarImage src={user.avatar} alt={user.name} />
-                <AvatarFallback className="rounded-lg">CN</AvatarFallback> */}
-              </div>
-              <div className="grid flex-1 text-left text-sm leading-tight">
-                <span className="truncate font-medium">{user.name}</span>
-                <span className="truncate text-xs text-muted-foreground">
-                  {user.email}
-                </span>
-              </div>
+              <AvatarImage user={user} />
+              <UserInfo user={user} />
               <IconDotsVertical className="ml-auto size-4" />
             </SidebarMenuButton>
           </DropdownMenuTrigger>
           <DropdownMenuContent
             className="w-(--radix-dropdown-menu-trigger-width) min-w-56 rounded-lg"
-            side={isMobile ? "bottom" : "right"}
+            side={"right"}
             align="end"
             sideOffset={4}
           >
             <DropdownMenuLabel className="p-0 font-normal">
               <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
-                <div className="h-8 w-8 bg-accent rounded-lg">
-                  {/* <AvatarImage src={user.avatar} alt={user.name} />
-                  <AvatarFallback className="rounded-lg">CN</AvatarFallback> */}
-                </div>
-                <div className="grid flex-1 text-left text-sm leading-tight">
-                  <span className="truncate font-medium">{user.name}</span>
-                  <span className="truncate text-xs text-muted-foreground">
-                    {user.email}
-                  </span>
-                </div>
+                <AvatarImage user={user} />
+                <UserInfo user={user} />
               </div>
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
@@ -91,10 +128,12 @@ export function NavUser({
                 Notifications
               </DropdownMenuItem>
             </DropdownMenuGroup>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem>
-              <IconLogout />
-              Log out
+            <DropdownMenuSeparator className="my-0.5" />
+            <DropdownMenuItem variant="destructive">
+              <LogoutLink className="flex items-center pl-0.5 gap-1.5">
+                <IconLogout />
+                Log out
+              </LogoutLink>
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

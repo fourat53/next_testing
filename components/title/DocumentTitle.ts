@@ -1,0 +1,25 @@
+"use client";
+
+import { useState, useEffect } from "react";
+
+export function DocumentTitle() {
+  const [title, setTitle] = useState("");
+
+  useEffect(() => {
+    setTitle(document.title);
+
+    const titleElement = document.querySelector("title");
+
+    if (!titleElement) return;
+
+    const observer = new MutationObserver(() => {
+      setTitle(document.title);
+    });
+
+    observer.observe(titleElement, { childList: true });
+
+    return () => observer.disconnect();
+  }, []);
+
+  return title;
+}
