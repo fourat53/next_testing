@@ -1,4 +1,7 @@
+import SmallLoader from "../loaders/small-loader";
 import type * as React from "react";
+import { NavMain } from "./NavMain";
+import { NavUser } from "./NavUser";
 import { Suspense } from "react";
 import {
   IconDashboard,
@@ -20,9 +23,6 @@ import {
   SidebarSeparator,
 } from "@/components/ui/sidebar";
 import Link from "next/link";
-import { NavMain } from "./NavMain";
-import { NavUser } from "./NavUser";
-import LoaderSmall from "../loaders/loader-small";
 
 type NavItem = {
   title: string;
@@ -86,7 +86,7 @@ export default function AdminSidebar({
       </SidebarContent>
       <SidebarFooter>
         <SidebarSeparator />
-        <Suspense fallback={<LoaderSmall />}>
+        <Suspense fallback={<SmallLoader />}>
           <NavUser />
         </Suspense>
       </SidebarFooter>

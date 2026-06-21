@@ -2,10 +2,10 @@ import SidebarLayout from "@/components/sidebar/SidebarLayout";
 import { Geist, Geist_Mono, Oxanium } from "next/font/google";
 import { KindeProvider } from "@/providers/kinde-provider";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import { AutoTitle } from "@/components/title/AutoTitle";
 import ThemeProvider from "@/providers/theme-provider";
 import { cn } from "@/lib/utils";
 import "./globals.css";
-import { AutoTitle } from "@/components/title/AutoTitle";
 
 const oxanium = Oxanium({ subsets: ["latin"], variable: "--font-sans" });
 
@@ -29,22 +29,21 @@ export default function RootLayout({
       suppressHydrationWarning
       lang="en"
       className={cn(
-        "antialiased",
         geistSans.variable,
         geistMono.variable,
-        "font-sans",
         oxanium.variable,
+        "antialiased font-sans",
       )}
     >
       <body className="min-h-screen text-foreground bg-sidebar">
-        <KindeProvider>
-          <ThemeProvider>
+        <AutoTitle />
+        <ThemeProvider>
+          <KindeProvider>
             <TooltipProvider>
-              <AutoTitle />
               <SidebarLayout>{children}</SidebarLayout>
             </TooltipProvider>
-          </ThemeProvider>
-        </KindeProvider>
+          </KindeProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

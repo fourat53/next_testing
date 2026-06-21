@@ -1,8 +1,25 @@
 import DataTable from "@/components/tables/DataTable";
+import { getPaginationParams } from "@/lib/pagination";
 import prisma from "@/lib/prisma";
 
-export default async function Page() {
-  const orders = await prisma.order.findMany();
+type PageProps = {
+  searchParams: Promise<{ page?: string }>;
+};
+
+export default async function Page({ searchParams }: PageProps) {
+  const params = await searchParams;
+  const totalCount = await prisma.order.count();
+  const { page, skip, take, totalPages } = getPaginationParams(
+    params,
+    totalCount,
+  );
+
+  const orders = await prisma.order.findMany({
+    skip,
+    take,
+    orderBy: { id: "asc" },
+  });
+
   const header = [
     "Order ID",
     "Order Date",
@@ -12,9 +29,15 @@ export default async function Page() {
   ];
   const rows = orders.map((o) => ({
     ...o,
-    orderDate: o.orderDate.toLocaleDateString(),
+    orderDate: o.orderDate.toISOString().split("T")[0],
     totalAmount: o.totalAmount.toFixed(0),
   }));
 
-  return <DataTable<(typeof rows)[0]> header={header} rows={rows} />;
+  return (
+    <DataTable<(typeof rows)[0]>
+      header={header}
+      rows={rows}
+      pagination={{ currentPage: page, totalPages, basePath: "/orders" }}
+    />
+  );
 }
