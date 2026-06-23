@@ -1,43 +1,47 @@
-import DataTable from "@/components/tables/DataTable";
-import { getPaginationParams } from "@/lib/pagination";
-import prisma from "@/lib/prisma";
+import DataTablePagination from "@/components/data-table/DataTablePagination";
+import DataTableSkeleton from "@/components/data-table/DataTableSkeleton";
+import { getOrderCount, getOrdersPage } from "@/queries/Order";
+import { getPaginationParams } from "@/components/data-table/PaginationParams";
+import DataTable from "@/components/data-table/DataTable";
+import { formatDate } from "@/lib/date-format";
+import { Suspense } from "react";
+
+const ORDERS_HEADER = [
+  "Order ID",
+  "Order Date",
+  "Total Amount",
+  "Order Status",
+  "User ID",
+];
 
 type PageProps = {
   searchParams: Promise<{ page?: string }>;
 };
 
-export default async function Page({ searchParams }: PageProps) {
+export default async function OrdersPage({ searchParams }: PageProps) {
   const params = await searchParams;
-  const totalCount = await prisma.order.count();
-  const { page, skip, take, totalPages } = getPaginationParams(
-    params,
-    totalCount,
-  );
 
-  const orders = await prisma.order.findMany({
-    skip,
-    take,
-    orderBy: { id: "asc" },
-  });
+  const totalCount = await getOrderCount();
+  const { page, totalPages } = getPaginationParams(params, totalCount);
 
-  const header = [
-    "Order ID",
-    "Order Date",
-    "Total Amount",
-    "Order Status",
-    "User ID",
-  ];
-  const rows = orders.map((o) => ({
-    ...o,
-    orderDate: o.orderDate.toISOString().split("T")[0],
-    totalAmount: o.totalAmount.toFixed(0),
+  const rows = await getOrdersPage(page);
+  const orders = rows.map((order) => ({
+    ...order,
+    orderDate: formatDate(order.orderDate),
   }));
 
+  const pageKey = params.page ?? "1";
   return (
-    <DataTable<(typeof rows)[0]>
-      header={header}
-      rows={rows}
-      pagination={{ currentPage: page, totalPages, basePath: "/orders" }}
-    />
+    <>
+      <Suspense
+        key={pageKey}
+        fallback={<DataTableSkeleton header={ORDERS_HEADER} />}
+      >
+        <DataTable<(typeof orders)[0]> header={ORDERS_HEADER} rows={orders} />
+      </Suspense>
+      {totalPages > 1 && (
+        <DataTablePagination basePath={"/orders"} totalPages={totalPages} />
+      )}
+    </>
   );
 }

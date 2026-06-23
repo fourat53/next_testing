@@ -109,7 +109,7 @@ export default async function HomePage() {
 
 import { useAuth } from "@workos-inc/authkit-nextjs/components";
 import { signOutAction } from "@/actions/userActions";
-import LoaderSmall from "../loaders/loader-small";
+import LoaderSmall from "@/components/loaders/loader-small";
 import { Button } from "@/components/ui/button";
 import { redirect } from "next/navigation";
 

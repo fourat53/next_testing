@@ -1,7 +1,7 @@
-import SmallLoader from "../loaders/small-loader";
+import SmallLoader from "@/components/loaders/small-loader";
+import { NavMain } from "@/components/sidebar/NavMain";
+import { NavUser } from "@/components/sidebar/NavUser";
 import type * as React from "react";
-import { NavMain } from "./NavMain";
-import { NavUser } from "./NavUser";
 import { Suspense } from "react";
 import {
   IconDashboard,

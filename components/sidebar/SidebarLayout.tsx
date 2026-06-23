@@ -5,7 +5,7 @@ import {
   SidebarInset,
   SidebarTrigger,
 } from "@/components/ui/sidebar";
-import ThemeToggle from "../buttons/theme-toggle";
+import ThemeToggle from "@/components/buttons/theme-toggle";
 
 export default function SidebarLayout({
   children,

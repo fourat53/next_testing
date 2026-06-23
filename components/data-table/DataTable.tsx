@@ -7,39 +7,17 @@ import {
   TableRow,
   TableCell,
 } from "@/components/ui/table";
-import {
-  Pagination,
-  PaginationContent,
-  PaginationEllipsis,
-  PaginationItem,
-  PaginationLink,
-  PaginationNext,
-  PaginationPrevious,
-} from "@/components/ui/pagination";
-import { getVisiblePages, pageHref } from "@/lib/pagination";
-
-type DataTablePagination = {
-  currentPage: number;
-  totalPages: number;
-  basePath: string;
-};
 
 type DataTableProps<T> = {
   header: string[];
   rows: T[];
-  pagination?: DataTablePagination;
 };
 
 export default function DataTable<
   T extends { id: number } & Record<string, unknown>,
->({ header, rows, pagination }: DataTableProps<T>) {
-  const visiblePages = pagination
-    ? getVisiblePages(pagination.currentPage, pagination.totalPages)
-    : [];
-
+>({ header, rows }: DataTableProps<T>) {
   return (
-    <>
-      <Table>
+    <Table>
         <TableHeader className="bg-chart-1 dark:bg-sidebar-accent">
           <TableRow>
             {header.map((item) => (
@@ -98,52 +76,6 @@ export default function DataTable<
             </TableRow>
           ))}
         </TableBody>
-      </Table>
-
-      {pagination && pagination.totalPages > 1 && (
-        <Pagination className="absolute left-1/2 -translate-x-1/2 bottom-9">
-          <PaginationContent>
-            <PaginationItem>
-              <PaginationPrevious
-                href={pageHref(pagination.basePath, pagination.currentPage - 1)}
-                aria-disabled={pagination.currentPage <= 1}
-                className={cn(
-                  pagination.currentPage <= 1 &&
-                    "pointer-events-none opacity-50",
-                )}
-              />
-            </PaginationItem>
-
-            {visiblePages.map((item) =>
-              item.type === "ellipsis" ? (
-                <PaginationItem key={`ellipsis-${item.key}`}>
-                  <PaginationEllipsis />
-                </PaginationItem>
-              ) : (
-                <PaginationItem key={item.page}>
-                  <PaginationLink
-                    href={pageHref(pagination.basePath, item.page)}
-                    isActive={item.page === pagination.currentPage}
-                  >
-                    {item.page}
-                  </PaginationLink>
-                </PaginationItem>
-              ),
-            )}
-
-            <PaginationItem>
-              <PaginationNext
-                href={pageHref(pagination.basePath, pagination.currentPage + 1)}
-                aria-disabled={pagination.currentPage >= pagination.totalPages}
-                className={cn(
-                  pagination.currentPage >= pagination.totalPages &&
-                    "pointer-events-none opacity-50",
-                )}
-              />
-            </PaginationItem>
-          </PaginationContent>
-        </Pagination>
-      )}
-    </>
+    </Table>
   );
 }

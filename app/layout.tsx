@@ -5,7 +5,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { AutoTitle } from "@/components/title/AutoTitle";
 import ThemeProvider from "@/providers/theme-provider";
 import { cn } from "@/lib/utils";
-import "./globals.css";
+import "@/app/globals.css";
 
 const oxanium = Oxanium({ subsets: ["latin"], variable: "--font-sans" });
 

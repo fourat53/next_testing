@@ -27,7 +27,7 @@ import {
   IconUserCircle,
 } from "@tabler/icons-react";
 import Image from "next/image";
-import { Button } from "../ui/button";
+import { Button } from "@/components/ui/button";
 
 function AvatarImage({ user }: { user: KindeUser<Record<string, unknown>> }) {
   return (

@@ -4,10 +4,21 @@ type SearchParams = {
   page?: string;
 };
 
-export function getPaginationParams(
-  searchParams: SearchParams,
-  totalCount: number,
-) {
+function parsePage(
+  value: string | null | undefined,
+  totalPages?: number,
+): number {
+  const parsed = Number.parseInt(value ?? "1", 10);
+  const page = Number.isNaN(parsed) ? 1 : parsed;
+
+  if (totalPages !== undefined) {
+    return Math.min(Math.max(1, page), totalPages);
+  }
+
+  return Math.max(1, page);
+}
+
+function getPaginationParams(searchParams: SearchParams, totalCount: number) {
   const parsedPage = Number.parseInt(searchParams.page ?? "1", 10);
   const requestedPage = Number.isNaN(parsedPage) ? 1 : parsedPage;
   const totalPages = Math.max(1, Math.ceil(totalCount / PAGE_SIZE));
@@ -23,15 +34,15 @@ export function getPaginationParams(
   };
 }
 
-export function pageHref(basePath: string, page: number) {
+function pageHref(basePath: string, page: number) {
   return page === 1 ? basePath : `${basePath}?page=${page}`;
 }
 
-export type VisiblePageItem =
+type VisiblePageItem =
   | { type: "page"; page: number }
   | { type: "ellipsis"; key: "leading" | "trailing" };
 
-export function getVisiblePages(
+function getVisiblePages(
   currentPage: number,
   totalPages: number,
 ): VisiblePageItem[] {
@@ -63,3 +74,5 @@ export function getVisiblePages(
 
   return pages;
 }
+
+export { PAGE_SIZE, parsePage, getPaginationParams, pageHref, getVisiblePages };

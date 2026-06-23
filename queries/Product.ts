@@ -1,0 +1,24 @@
+import { prisma, CACHE_REVALIDATE_SECONDS } from "@/lib/prisma";
+import { PAGE_SIZE } from "@/components/data-table/PaginationParams";
+import { unstable_cache } from "next/cache";
+
+const getProductCount = unstable_cache(
+  async () => prisma.product.count(),
+  ["products-count"],
+  { revalidate: CACHE_REVALIDATE_SECONDS, tags: ["products"] },
+);
+
+function getProductsPage(page: number) {
+  return unstable_cache(
+    async () =>
+      prisma.product.findMany({
+        skip: (page - 1) * PAGE_SIZE,
+        take: PAGE_SIZE,
+        orderBy: { id: "asc" },
+      }),
+    ["products-page", String(page)],
+    { revalidate: CACHE_REVALIDATE_SECONDS, tags: ["products"] },
+  )();
+}
+
+export { getProductCount, getProductsPage };
