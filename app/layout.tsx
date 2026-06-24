@@ -1,4 +1,3 @@
-import SidebarLayout from "@/components/sidebar/SidebarLayout";
 import { Geist, Geist_Mono, Oxanium } from "next/font/google";
 import { KindeProvider } from "@/providers/kinde-provider";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -39,9 +38,7 @@ export default function RootLayout({
         <AutoTitle />
         <ThemeProvider>
           <KindeProvider>
-            <TooltipProvider>
-              <SidebarLayout>{children}</SidebarLayout>
-            </TooltipProvider>
+            <TooltipProvider>{children}</TooltipProvider>
           </KindeProvider>
         </ThemeProvider>
       </body>

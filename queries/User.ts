@@ -1,5 +1,6 @@
-import { prisma, CACHE_REVALIDATE_SECONDS } from "@/lib/prisma";
 import { PAGE_SIZE } from "@/components/data-table/PaginationParams";
+import { prisma, CACHE_REVALIDATE_SECONDS } from "@/lib/prisma";
+import type { User } from "@/lib/generated/prisma/client";
 import { unstable_cache } from "next/cache";
 
 const getUserCount = unstable_cache(
@@ -18,10 +19,13 @@ function getUsersPage(page: number) {
         skip: (page - 1) * PAGE_SIZE,
         take: PAGE_SIZE,
         orderBy: { id: "asc" },
+        omit: { password: true },
       }),
     ["users-page", String(page)],
     { revalidate: CACHE_REVALIDATE_SECONDS, tags: ["users"] },
   )();
 }
 
-export { getUserCount, getUsersPage };
+type UserType = Omit<User, "password">;
+
+export { type UserType, getUserCount, getUsersPage };

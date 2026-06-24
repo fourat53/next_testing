@@ -1,5 +1,6 @@
-import { prisma, CACHE_REVALIDATE_SECONDS } from "@/lib/prisma";
 import { PAGE_SIZE } from "@/components/data-table/PaginationParams";
+import { prisma, CACHE_REVALIDATE_SECONDS } from "@/lib/prisma";
+import type { Product } from "@/lib/generated/prisma/client";
 import { unstable_cache } from "next/cache";
 
 const getProductCount = unstable_cache(
@@ -21,4 +22,6 @@ function getProductsPage(page: number) {
   )();
 }
 
-export { getProductCount, getProductsPage };
+type ProductType = Product;
+
+export { type ProductType, getProductCount, getProductsPage };

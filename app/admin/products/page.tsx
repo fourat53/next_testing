@@ -1,9 +1,13 @@
+import { getPaginationParams } from "@/components/data-table/PaginationParams";
 import DataTablePagination from "@/components/data-table/DataTablePagination";
 import DataTableSkeleton from "@/components/data-table/DataTableSkeleton";
-import { getProductCount, getProductsPage } from "@/queries/Product";
-import { getPaginationParams } from "@/components/data-table/PaginationParams";
 import DataTable from "@/components/data-table/DataTable";
 import { Suspense } from "react";
+import {
+  getProductCount,
+  getProductsPage,
+  type ProductType,
+} from "@/queries/Product";
 
 const PRODUCTS_HEADER = [
   "Product ID",
@@ -15,9 +19,9 @@ const PRODUCTS_HEADER = [
   "Category ID",
 ];
 
-type PageProps = {
+interface PageProps {
   searchParams: Promise<{ page?: string }>;
-};
+}
 
 export default async function ProductsPage({ searchParams }: PageProps) {
   const params = await searchParams;
@@ -25,23 +29,18 @@ export default async function ProductsPage({ searchParams }: PageProps) {
   const totalCount = await getProductCount();
   const { page, totalPages } = getPaginationParams(params, totalCount);
 
-  const products = await getProductsPage(page);
+  const products: ProductType[] = await getProductsPage(page);
 
   const pageKey = params.page ?? "1";
   return (
-    <>
-      <Suspense
-        key={pageKey}
-        fallback={<DataTableSkeleton header={PRODUCTS_HEADER} />}
-      >
-        <DataTable<(typeof products)[0]>
-          header={PRODUCTS_HEADER}
-          rows={products}
-        />
-      </Suspense>
+    <Suspense
+      key={pageKey}
+      fallback={<DataTableSkeleton header={PRODUCTS_HEADER} />}
+    >
+      <DataTable<ProductType> header={PRODUCTS_HEADER} rows={products} />
       {totalPages > 1 && (
         <DataTablePagination basePath={"/products"} totalPages={totalPages} />
       )}
-    </>
+    </Suspense>
   );
 }

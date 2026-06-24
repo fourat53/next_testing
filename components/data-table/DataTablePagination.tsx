@@ -18,20 +18,13 @@ import {
   PaginationPrevious,
 } from "@/components/ui/pagination";
 
-type DataTablePaginationProps = {
-  basePath: string;
-  totalPages: number;
-};
-
-function PaginationPageButton({
-  page,
-  isActive,
-  onClick,
-}: {
+interface PaginationButtonProps {
   page: number;
   isActive: boolean;
   onClick: () => void;
-}) {
+}
+
+function PaginationButton({ page, isActive, onClick }: PaginationButtonProps) {
   return (
     <button
       type="button"
@@ -46,6 +39,11 @@ function PaginationPageButton({
       {page}
     </button>
   );
+}
+
+interface DataTablePaginationProps {
+  basePath: string;
+  totalPages: number;
 }
 
 export default function DataTablePagination({
@@ -95,11 +93,8 @@ export default function DataTablePagination({
   }
 
   return (
-    <Pagination
-      aria-busy={isPending}
-      className="absolute left-1/2 -translate-x-1/2 bottom-9"
-    >
-      <PaginationContent>
+    <Pagination aria-busy={isPending}>
+      <PaginationContent className="mx-auto">
         <PaginationItem>
           <PaginationPrevious
             href={pageHref(basePath, currentPage - 1)}
@@ -122,7 +117,7 @@ export default function DataTablePagination({
             </PaginationItem>
           ) : (
             <PaginationItem key={item.page}>
-              <PaginationPageButton
+              <PaginationButton
                 page={item.page}
                 isActive={item.page === currentPage}
                 onClick={() => navigate(item.page)}

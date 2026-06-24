@@ -17,65 +17,65 @@ export default function DataTable<
   T extends { id: number } & Record<string, unknown>,
 >({ header, rows }: DataTableProps<T>) {
   return (
-    <Table>
-        <TableHeader className="bg-chart-1 dark:bg-sidebar-accent">
-          <TableRow>
-            {header.map((item) => (
+    <Table parentClassName="max-h-[calc(100vh-182px)] pb-2 w-full">
+      <TableHeader className="bg-chart-1 dark:bg-sidebar-accent">
+        <TableRow>
+          {header.map((item) => (
+            <TableCell
+              key={item}
+              className={cn(
+                "border-l border-mist-300 dark:border-mist-700",
+                item === header[0] && "border-none",
+              )}
+            >
+              {item}
+            </TableCell>
+          ))}
+        </TableRow>
+      </TableHeader>
+      <TableBody>
+        {rows.map((row) => (
+          <TableRow key={row.id}>
+            {Object.values(row).map((value, colIndex) => (
               <TableCell
-                key={item}
+                key={`${row.id}-${header[colIndex]}`}
                 className={cn(
                   "border-l border-mist-300 dark:border-mist-700",
-                  item === header[0] && "border-none",
+                  colIndex === 0 && "border-none",
                 )}
               >
-                {item}
+                {header[colIndex].toLowerCase().includes("id") ? (
+                  <Link href="/" className="underline">
+                    {String(value)}
+                  </Link>
+                ) : header[colIndex].toLowerCase().includes("status") ? (
+                  <p
+                    className={cn(
+                      "w-fit text-center bg-accent text-rose-100 rounded-full flex items-center px-2",
+                      value === "PENDING" &&
+                        "bg-[#ffe6a8] text-yellow-600 dark:bg-yellow-900/30 dark:text-yellow-400",
+                      value === "PROCESSING" &&
+                        "bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400",
+                      value === "SHIPPED" &&
+                        "bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-400",
+                      value === "DELIVERED" &&
+                        "bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400",
+                      value === "CANCELLED" &&
+                        "bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400",
+                    )}
+                  >
+                    {String(value)}
+                  </p>
+                ) : value !== null && value !== undefined ? (
+                  String(value)
+                ) : (
+                  "-"
+                )}
               </TableCell>
             ))}
           </TableRow>
-        </TableHeader>
-        <TableBody>
-          {rows.map((row) => (
-            <TableRow key={row.id}>
-              {Object.values(row).map((value, colIndex) => (
-                <TableCell
-                  key={`${row.id}-${header[colIndex]}`}
-                  className={cn(
-                    "border-l border-mist-300 dark:border-mist-700",
-                    colIndex === 0 && "border-none",
-                  )}
-                >
-                  {header[colIndex].toLowerCase().includes("id") ? (
-                    <Link href="/" className="underline">
-                      {String(value)}
-                    </Link>
-                  ) : header[colIndex].toLowerCase().includes("status") ? (
-                    <p
-                      className={cn(
-                        "w-fit text-center bg-accent text-rose-100 rounded-full flex items-center px-2",
-                        value === "PENDING" &&
-                          "bg-[#ffe6a8] text-yellow-600 dark:bg-yellow-900/30 dark:text-yellow-400",
-                        value === "PROCESSING" &&
-                          "bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400",
-                        value === "SHIPPED" &&
-                          "bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-400",
-                        value === "DELIVERED" &&
-                          "bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400",
-                        value === "CANCELLED" &&
-                          "bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400",
-                      )}
-                    >
-                      {String(value)}
-                    </p>
-                  ) : value !== null && value !== undefined ? (
-                    String(value)
-                  ) : (
-                    "-"
-                  )}
-                </TableCell>
-              ))}
-            </TableRow>
-          ))}
-        </TableBody>
+        ))}
+      </TableBody>
     </Table>
   );
 }

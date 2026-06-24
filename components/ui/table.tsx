@@ -5,11 +5,18 @@ import type * as React from "react";
 import { cn } from "@/lib/utils";
 import { ScrollArea } from "@/components/ui/scroll-area";
 
-function Table({ className, ...props }: React.ComponentProps<"table">) {
+function Table({
+  className,
+  parentClassName,
+  ...props
+}: React.ComponentProps<"table"> & { parentClassName?: string }) {
   return (
     <ScrollArea
       data-slot="table-container"
-      className="relative overscroll-none max-h-[calc(100vh-140px)] w-full overflow-x-auto rounded-lg border border-mist-300 dark:border-mist-700"
+      className={cn(
+        "overscroll-none overflow-auto rounded-lg border border-mist-300 dark:border-mist-700",
+        parentClassName,
+      )}
     >
       <table
         data-slot="table"
