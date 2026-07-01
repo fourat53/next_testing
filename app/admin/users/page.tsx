@@ -1,6 +1,10 @@
 import { getPaginationParams } from "@/components/data-table/PaginationParams";
 import DataTablePagination from "@/components/data-table/DataTablePagination";
-import { getUserCount, getUsersPage, type UserType } from "@/queries/User";
+import {
+  getUserCount,
+  getUsersPage,
+  type UserType,
+} from "@/queries/UserQueries";
 import DataTableSkeleton from "@/components/data-table/DataTableSkeleton";
 import DataTable from "@/components/data-table/DataTable";
 import { Suspense } from "react";

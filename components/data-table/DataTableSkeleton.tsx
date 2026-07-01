@@ -1,5 +1,5 @@
-import { Skeleton } from "@/components/ui/skeleton";
 import { PAGE_SIZE } from "@/components/data-table/PaginationParams";
+import { Skeleton } from "@/components/ui/skeleton";
 import { cn } from "@/lib/utils";
 import {
   Table,

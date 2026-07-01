@@ -1,8 +1,9 @@
 import { PAGE_SIZE } from "@/components/data-table/PaginationParams";
+import type { OrderStatus } from "@/lib/generated/prisma/client";
 import { prisma, CACHE_REVALIDATE_SECONDS } from "@/lib/prisma";
 import type { Order } from "@/lib/generated/prisma/client";
-import { formatDate } from "@/lib/date-format";
 import { unstable_cache } from "next/cache";
+import { formatDate } from "@/lib/date-format";
 
 const getOrderCount = unstable_cache(
   async () => prisma.order.count(),

@@ -1,0 +1,25 @@
+"use server";
+
+import { OrderStatus } from "@/lib/generated/prisma/enums";
+import { updateTag } from "next/cache";
+import { prisma } from "@/lib/prisma";
+
+async function createOrder(formData: FormData) {
+  const orderDate = new Date(formData.get("orderDate") as string);
+  const totalAmount = Number(formData.get("totalAmount"));
+  const orderStatus = (formData.get("orderStatus") as OrderStatus) || "PENDING";
+  const userId = Number(formData.get("userId"));
+
+  await prisma.order.create({
+    data: {
+      orderDate,
+      totalAmount,
+      orderStatus,
+      userId,
+    },
+  });
+
+  updateTag("orders");
+}
+
+export { createOrder };

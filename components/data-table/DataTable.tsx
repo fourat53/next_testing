@@ -7,6 +7,7 @@ import {
   TableRow,
   TableCell,
 } from "@/components/ui/table";
+import { PAGE_SIZE } from "./PaginationParams";
 
 type DataTableProps<T> = {
   header: string[];
@@ -17,7 +18,14 @@ export default function DataTable<
   T extends { id: number } & Record<string, unknown>,
 >({ header, rows }: DataTableProps<T>) {
   return (
-    <Table parentClassName="max-h-[calc(100vh-182px)] pb-2 w-full">
+    <Table
+      parentClassName="h-[calc(100vh-165px)] w-full"
+      className={
+        rows.length < PAGE_SIZE
+          ? "border-b border-mist-300 dark:border-mist-700"
+          : ""
+      }
+    >
       <TableHeader className="bg-chart-1 dark:bg-sidebar-accent">
         <TableRow>
           {header.map((item) => (

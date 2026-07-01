@@ -94,7 +94,7 @@ export default function DataTablePagination({
 
   return (
     <Pagination aria-busy={isPending}>
-      <PaginationContent className="mx-auto">
+      <PaginationContent className="relative -bottom-1.5 mx-auto">
         <PaginationItem>
           <PaginationPrevious
             href={pageHref(basePath, currentPage - 1)}

@@ -7,7 +7,7 @@ import {
   getProductCount,
   getProductsPage,
   type ProductType,
-} from "@/queries/Product";
+} from "@/queries/ProductQueries";
 
 const PRODUCTS_HEADER = [
   "Product ID",

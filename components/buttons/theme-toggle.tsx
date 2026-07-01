@@ -2,14 +2,14 @@
 
 import { IconMoon, IconSun, IconSunMoon, type Icon } from "@tabler/icons-react";
 import { Button } from "@/components/ui/button";
+import { useTheme } from "@wrksz/themes/client";
+import { cn } from "@/lib/utils";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { useTheme } from "@wrksz/themes/client";
-import { cn } from "@/lib/utils";
 
 type ThemeType = {
   icon: Icon;

@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 
-export function DocumentTitle() {
+export default function DocumentTitle() {
   const [title, setTitle] = useState("");
 
   useEffect(() => {

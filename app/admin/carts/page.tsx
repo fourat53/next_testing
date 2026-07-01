@@ -1,6 +1,10 @@
 import { getPaginationParams } from "@/components/data-table/PaginationParams";
 import DataTablePagination from "@/components/data-table/DataTablePagination";
-import { getCartCount, getCartsPage, type CartType } from "@/queries/Cart";
+import {
+  getCartCount,
+  getCartsPage,
+  type CartType,
+} from "@/queries/CartQueries";
 import DataTableSkeleton from "@/components/data-table/DataTableSkeleton";
 import DataTable from "@/components/data-table/DataTable";
 import { Suspense } from "react";

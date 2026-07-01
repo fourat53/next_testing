@@ -1,5 +1,9 @@
 import { getPaginationParams } from "@/components/data-table/PaginationParams";
-import { getOrderCount, getOrdersPage, type OrderType } from "@/queries/Order";
+import {
+  getOrderCount,
+  getOrdersPage,
+  type OrderType,
+} from "@/queries/OrderQueries";
 import DataTablePagination from "@/components/data-table/DataTablePagination";
 import DataTableSkeleton from "@/components/data-table/DataTableSkeleton";
 import DataTable from "@/components/data-table/DataTable";

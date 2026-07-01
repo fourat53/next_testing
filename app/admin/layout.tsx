@@ -1,4 +1,5 @@
-import { DocumentTitle } from "@/components/title/DocumentTitle";
+import CreateButton from "@/components/buttons/create-button";
+import DocumentTitle from "@/components/title/DocumentTitle";
 import AdminSidebar from "@/components/sidebar/AdminSidebar";
 import ThemeToggle from "@/components/buttons/theme-toggle";
 import {
@@ -6,7 +7,6 @@ import {
   SidebarInset,
   SidebarTrigger,
 } from "@/components/ui/sidebar";
-import { Button } from "@/components/ui/button";
 
 export default function AdminLayout({
   children,
@@ -25,12 +25,12 @@ export default function AdminLayout({
                 <DocumentTitle />
               </div>
               <div className="flex items-center gap-2 justify-end">
-                {/*  <Button size="icon"><IconPlus/></Button> */}
                 <ThemeToggle />
+                <CreateButton />
               </div>
             </div>
             <div className="border-b border-mist-200 dark:border-mist-700" />
-            <div className="h-188 p-4 overflow-y-auto">{children}</div>
+            <div className="h-188 p-3 overflow-y-auto">{children}</div>
           </div>
         </div>
       </SidebarInset>

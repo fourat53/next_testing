@@ -1,4 +1,4 @@
-const PAGE_SIZE = 18;
+const PAGE_SIZE = 20;
 
 type SearchParams = {
   page?: string;
@@ -35,7 +35,8 @@ function getPaginationParams(searchParams: SearchParams, totalCount: number) {
 }
 
 function pageHref(basePath: string, page: number) {
-  return page === 1 ? basePath : `/admin${basePath}?page=${page}`;
+  const path = `/admin${basePath}`;
+  return page === 1 ? path : `${path}?page=${page}`;
 }
 
 type VisiblePageItem =
