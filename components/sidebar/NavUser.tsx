@@ -73,12 +73,12 @@ export async function NavUser() {
   if (!isLoggedIn || !user) {
     return (
       <SidebarMenu>
-        <SidebarMenuItem className="w-full px-2.5 py-1.5">
-          <div className="flex flex-col gap-2">
-            <Button className="w-full">
+        <SidebarMenuItem className="w-full p-1.5">
+          <div className="w-full flex gap-2 items-center justify-between">
+            <Button className="w-11/24">
               <LoginLink>Login</LoginLink>
             </Button>
-            <Button className="w-full" variant="outline">
+            <Button className="w-11/24" variant="outline">
               <RegisterLink>Sign Up</RegisterLink>
             </Button>
           </div>
